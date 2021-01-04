@@ -14,19 +14,20 @@ class TabsScreen extends StatefulWidget {
 }
 
 class _TabsScreenState extends State<TabsScreen> {
-
   List<Map<String, Object>> _pages;
   int _selectedPageIndex = 0;
 
   @override
   void initState() {
-    _pages  = [
+    _pages = [
       {
         'page': CategoriesScreen(),
         'title': 'Categories',
       },
       {
-        'page': FavoriteScreen(favMeals: widget.favoriteMeals,),
+        'page': FavoriteScreen(
+          favMeals: widget.favoriteMeals,
+        ),
         'title': 'FavoriteScreen',
       }
     ];
@@ -61,14 +62,14 @@ class _TabsScreenState extends State<TabsScreen> {
               icon: Icon(
                 Icons.category,
               ),
-              title: Text('Categories'),
+              label: 'Categories',
             ),
             BottomNavigationBarItem(
               backgroundColor: Theme.of(context).primaryColor,
               icon: Icon(
                 Icons.star,
               ),
-              title: Text('Favorites'),
+              label: 'Favorites',
             ),
           ],
         ),

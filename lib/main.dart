@@ -16,7 +16,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   Map<String, bool> _filters = {
     'gluten': false,
     'lactose': false,
@@ -31,16 +30,16 @@ class _MyAppState extends State<MyApp> {
     setState(() {
       _filters = filterData;
       _availableMeals = DUMMY_MEALS.where((meal) {
-        if(_filters['gluten'] == true && !meal.isGlutenFree) {
+        if (_filters['gluten'] == true && !meal.isGlutenFree) {
           return false;
         }
-        if(_filters['lactose'] == true && !meal.isLactoseFree) {
+        if (_filters['lactose'] == true && !meal.isLactoseFree) {
           return false;
         }
-        if(_filters['vegetarian'] == true && !meal.isVegetarian) {
+        if (_filters['vegetarian'] == true && !meal.isVegetarian) {
           return false;
         }
-        if(_filters['vegan'] == true && !meal.isVegan) {
+        if (_filters['vegan'] == true && !meal.isVegan) {
           return false;
         }
         return true;
@@ -49,19 +48,19 @@ class _MyAppState extends State<MyApp> {
   }
 
   void _toggleFavorite(String mealId) {
-    final existingIndex = _favoriteMeals.indexWhere((meal) => meal.id == mealId);
-    if(existingIndex >= 0) {
+    final existingIndex =
+        _favoriteMeals.indexWhere((meal) => meal.id == mealId);
+    if (existingIndex >= 0) {
       setState(() {
         _favoriteMeals.removeAt(existingIndex);
       });
     } else {
       setState(() {
-        _favoriteMeals.add(
-          DUMMY_MEALS.firstWhere((meal) => meal.id == mealId)
-        );
+        _favoriteMeals.add(DUMMY_MEALS.firstWhere((meal) => meal.id == mealId));
       });
     }
   }
+
   bool _isMealFavorite(String id) {
     return _favoriteMeals.any((meal) => meal.id == id);
   }
@@ -70,32 +69,40 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'DeliMeals',
+      title: 'Meals App',
       theme: ThemeData(
         primarySwatch: Colors.pink,
         accentColor: Colors.amber,
         canvasColor: Color.fromRGBO(255, 254, 229, 1),
         fontFamily: 'Raleway',
         textTheme: ThemeData.light().textTheme.copyWith(
-          body1: TextStyle(
-            color: Color.fromRGBO(20, 51, 51, 1),
-          ),
-          body2: TextStyle(
-            color: Color.fromRGBO(20, 51, 51, 1)
-          ),
-          title: TextStyle(
-            fontSize: 24,
-            fontFamily: 'RobotoCondensed',
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+              bodyText2: TextStyle(
+                color: Color.fromRGBO(20, 51, 51, 1),
+              ),
+              bodyText1: TextStyle(color: Color.fromRGBO(20, 51, 51, 1)),
+              headline6: TextStyle(
+                fontSize: 24,
+                fontFamily: 'RobotoCondensed',
+                fontWeight: FontWeight.bold,
+              ),
+            ),
       ),
       //home: TabsScreen(),
       routes: {
-        '/' : (context) => TabsScreen(favoriteMeals: _favoriteMeals,),
-        CategoryMealsScreen.routeName : (context) => CategoryMealsScreen(availableMeals: _availableMeals,),
-        MealDetailScreen.routeName : (context) => MealDetailScreen(toggleFavorite: _toggleFavorite, isFavorite: _isMealFavorite,),
-        FiltersScreen.routeName : (context) => FiltersScreen(saveFilters: _setFilters, currentFilter: _filters,)
+        '/': (context) => TabsScreen(
+              favoriteMeals: _favoriteMeals,
+            ),
+        CategoryMealsScreen.routeName: (context) => CategoryMealsScreen(
+              availableMeals: _availableMeals,
+            ),
+        MealDetailScreen.routeName: (context) => MealDetailScreen(
+              toggleFavorite: _toggleFavorite,
+              isFavorite: _isMealFavorite,
+            ),
+        FiltersScreen.routeName: (context) => FiltersScreen(
+              saveFilters: _setFilters,
+              currentFilter: _filters,
+            )
       },
     );
   }
